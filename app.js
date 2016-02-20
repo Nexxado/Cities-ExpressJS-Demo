@@ -24,9 +24,24 @@ app.get('/cities', function(request, response) {
 
 app.post('/cities', urlencode, function(request, response) {
     var newCity = request.body;
+    
+    if(!newCity.name || !newCity.description){
+      response.sendStatus(400);
+      return false;
+    }
+    
     cities[newCity.name] = newCity.description;
     response.status(201).json(newCity.name);
 });
 
+app.get('/cities/:name', function(request, response) {
+//    response.send(cities[request.params.name]);
+    response.render('show.ejs', { city: {name: request.params.name, description: cities[request.params.name]}});
+});
+
+app.delete('/cities/:name', function(request, response) {
+   delete cities[request.params.name];
+    response.sendStatus(204);
+});
 
 module.exports = app;

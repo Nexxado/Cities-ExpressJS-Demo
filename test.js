@@ -75,3 +75,36 @@ describe('Creating new cities', function () {
     });
 
 });
+
+describe('Shows city info', function () {
+
+    it('Returns 200 status code', function (done) {
+        request(app)
+            .get('/cities/Lotopia')
+            .expect(200, done);
+    });
+
+    it('Returns HTML format', function (done) {
+        request(app)
+            .get('/cities/Lotopia')
+            .expect('Content-Type', /html/, done);
+    });
+    
+    it('Returns information for given city', function(done) {
+        request(app)
+            .get('/cities/Lotopia')
+            .expect(/some description/, done); 
+    });
+
+});
+
+
+describe('Deleting cities', function() {
+    
+    it('Returns a 204 status code', function(done) {
+         request(app)
+         .delete('/cities/Lotopia')
+         .expect(204, done);
+    });
+     
+});
